@@ -5,9 +5,16 @@ import Trip from "./Trip";
 import TripDAO from "./TripDAO";
 
 export default class TripService {
+    
+    constructor(
+        private readonly tripDao: TripDAO,
+        private readonly userSession: UserSession,
+    ) {
+    }
+
     public getTripsByUser(user: User): Trip[] {
         let tripList: Trip[] = [];
-        const loggedUser: User = UserSession.getLoggedUser();
+        const loggedUser: User = this.userSession.getLoggedUser();
         let isFriend: boolean = false;
 
         if (loggedUser != null) {
@@ -19,7 +26,7 @@ export default class TripService {
             }
 
             if (isFriend) {
-                tripList = TripDAO.findTripsByUser(user);
+                tripList = this.tripDao.findTripsByUser(user);
             }
 
             return tripList;
