@@ -19,12 +19,8 @@ export default class TripService {
             throw new UserNotLoggedInException();
         }
         
-        for (const friend of user.getFriends()) {
-            if (friend === loggedUser) {
-                return this.tripDao.findTripsByUser(user);
-            }
-        }
-
-        return [];
+        return user.isFriendWith(loggedUser)
+            ? this.tripDao.findTripsByUser(user)
+            : [];
     }
 }
