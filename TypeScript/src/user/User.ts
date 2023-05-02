@@ -19,4 +19,10 @@ export default class User {
     public getTrips(): Trip[] {
         return this.trips;
     }
+
+    public isFriendWith(person: User): boolean {
+        return this.getFriends()
+            .filter((friend) => friend === person)
+            .length > 0;
+    }
 }
